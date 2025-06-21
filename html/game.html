@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>F1 Trivia Guessing Game</title>
+  <style>
+    body {
+      background-color: #0c0c0c;
+      color: #f1f1f1;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      text-align: center;
+      padding: 40px;
+    }
+
+    input, button {
+      padding: 10px;
+      font-size: 16px;
+      margin-top: 10px;
+    }
+
+    .game-box {
+      background-color: #1c1c1c;
+      padding: 20px;
+      border-radius: 10px;
+      display: inline-block;
+      max-width: 500px;
+    }
+
+    #result {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>F1 Trivia Guessing Game</h1>
+  <div class="game-box">
+    <p id="questionText">Thinking of a question...</p>
+    <p>You have <span id="tries">3</span> tries. Good luck!</p>
+
+    <input type="text" id="guessInput" placeholder="Enter driver name">
+    <button onclick="checkGuess()">Guess</button>
+    <div id="result"></div>
+  </div>
+
+  <p><a href="f1.html" style="color:#e10600;">← Back to F1 Page</a></p>
+
+   <script>
+    const questions = [
+      {
+        question: "This driver won the 2024 World Championship.",
+        answer: "verstappen"
+      },
+      {
+        question: "This McLaren driver claimed his first win in 2024.",
+        answer: "norris"
+      },
+      {
+        question: "This Ferrari driver is known for his Monaco roots.",
+        answer: "leclerc"
+      },
+      {
+        question: "This 7-time world champion formerlly drove for Mercedes.",
+        answer: "hamilton"
+      },
+      {
+        question: "This Spanish driver races for Ferrari.",
+        answer: "sainz"
+      }
+    ];
+
+    const picked = questions[Math.floor(Math.random() * questions.length)];
+    let triesLeft = 3;
+
+    document.getElementById("questionText").textContent = picked.question;
+
+    function checkGuess() {
+      const input = document.getElementById("guessInput").value.trim().toLowerCase();
+      const result = document.getElementById("result");
+      const triesSpan = document.getElementById("tries");
+
+      if (input === "") {
+        result.textContent = "Please enter a name.";
+        return;
+      }
+
+      if (input === picked.answer) {
+        result.textContent = "🏁 Correct! You're an F1 expert!";
+        result.style.color = "#00ff00";
+      } else {
+        triesLeft--;
+        triesSpan.textContent = triesLeft;
+        if (triesLeft === 0) {
+          result.textContent = `Out of tries! The correct answer was: ${picked.answer}`;
+          result.style.color = "#ff4444";
+        } else {
+          result.textContent = "❌ Not quite. Try again!";
+          result.style.color = "#ffcc00";
+        }
+      }
+    }
+  </script>
+
+</body>
+</html>
